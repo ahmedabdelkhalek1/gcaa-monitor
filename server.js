@@ -29,13 +29,12 @@ app.get('/api/data', async (req, res) => {
     res.json(monitoringData);
   } catch (error) {
     console.error('Error fetching from main repo:', error.message);
-    // Fallback to drones-status repo history folder
+    // Fallback to drones-status repo history folder (public repo, no auth needed)
     try {
       const FALLBACK_REPO = 'ahmedabdelkhalek1/drones-status';
       const fallbackApiURL = `https://api.github.com/repos/${FALLBACK_REPO}/contents/history/summary.json`;
       const fallbackResponse = await fetch(fallbackApiURL, {
         headers: {
-          'Authorization': `token ${GITHUB_TOKEN}`,
           'Accept': 'application/vnd.github.v3+json'
         }
       });
