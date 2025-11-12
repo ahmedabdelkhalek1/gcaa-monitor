@@ -76,7 +76,7 @@ async function pushToGitHub(newRecords) {
     const payload = {
       message: `Monitor update (${newRecords.map(nr => nr.name).join(", ")})`,
       content: encodedContent,
-      branch: 'main'
+      branch: 'master'
     };
     if (sha) payload.sha = sha;
 
