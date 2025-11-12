@@ -26,16 +26,20 @@ function initCharts() {
 
 async function fetchData() {
   try {
-    const response = await fetch('/api/data');
-    if (!response.ok) throw new Error('Failed to fetch data');
-    allData = await response.json();
+    const [dataResponse, sitesResponse] = await Promise.all([
+      fetch('/api/data'),
+      fetch('/api/sites')
+    ]);
+    if (!dataResponse.ok) throw new Error('Failed to fetch data');
+    if (!sitesResponse.ok) throw new Error('Failed to fetch sites');
+    allData = await dataResponse.json();
+    const sites = await sitesResponse.json();
 
-    // Update selector with all sites
-    const sites = [...new Set(allData.map(r => r.name))];
+    // Update selector with all sites from sites.json
     siteSelector.innerHTML = '';
     sites.forEach(site => {
       const opt = document.createElement('option');
-      opt.value = site; opt.textContent = site;
+      opt.value = site.name; opt.textContent = site.name;
       siteSelector.appendChild(opt);
     });
 

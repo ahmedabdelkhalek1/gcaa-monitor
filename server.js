@@ -33,6 +33,10 @@ app.get('/api/data', async (req, res) => {
   }
 });
 
+app.get('/api/sites', (req, res) => {
+  res.sendFile(path.join(__dirname, 'sites.json'));
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
