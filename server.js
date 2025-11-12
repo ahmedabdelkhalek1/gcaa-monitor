@@ -29,10 +29,10 @@ app.get('/api/data', async (req, res) => {
     res.json(monitoringData);
   } catch (error) {
     console.error('Error fetching from main repo:', error.message);
-    // Fallback to drones-status repo
+    // Fallback to drones-status repo history folder
     try {
       const FALLBACK_REPO = 'ahmedabdelkhalek1/drones-status';
-      const fallbackApiURL = `https://api.github.com/repos/${FALLBACK_REPO}/contents/${DATA_FILE}`;
+      const fallbackApiURL = `https://api.github.com/repos/${FALLBACK_REPO}/contents/history/summary.json`;
       const fallbackResponse = await fetch(fallbackApiURL, {
         headers: {
           'Authorization': `token ${GITHUB_TOKEN}`,
@@ -43,7 +43,16 @@ app.get('/api/data', async (req, res) => {
       const fallbackFileData = await fallbackResponse.json();
       const fallbackContent = Buffer.from(fallbackFileData.content, 'base64').toString('utf-8');
       const fallbackMonitoringData = JSON.parse(fallbackContent);
-      res.json(fallbackMonitoringData);
+      // Transform the summary data to match our monitoring data format
+      const transformedData = fallbackMonitoringData.map(site => ({
+        timestamp: new Date().toISOString(),
+        name: site.name,
+        url: site.url,
+        status: site.status,
+        statusCode: site.status === 'up' ? 200 : 0,
+        responseTime: site.time || 0
+      }));
+      res.json(transformedData);
     } catch (fallbackError) {
       console.error('Error fetching from fallback repo:', fallbackError.message);
       res.status(500).json({ error: 'Failed to fetch monitoring data from both repos' });
