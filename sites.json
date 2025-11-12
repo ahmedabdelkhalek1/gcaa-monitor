@@ -1,0 +1,10 @@
+[
+  {
+    "name": "GCAA Drones",
+    "url": "https://drones.gov.ae/"
+  },
+  {
+    "name": "Grafana",
+    "url": "https://api.drones.gov.ae/grafana/login"
+  }
+]

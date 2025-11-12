@@ -1,55 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCAA Website Monitor</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Multi-Site Monitor</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🚁 GCAA Website Monitor</h1>
-            <p class="subtitle">Monitoring <a href="https://drones.gov.ae/" target="_blank">drones.gov.ae</a></p>
-        </header>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Current Status</div>
-                <div class="stat-value" id="currentStatus">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Uptime (24h)</div>
-                <div class="stat-value" id="uptime24h">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Avg Response Time</div>
-                <div class="stat-value" id="avgResponse">-</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Last Check</div>
-                <div class="stat-value" id="lastCheck">-</div>
-            </div>
-        </div>
-
-        <div class="charts-container">
-            <div class="chart-wrapper">
-                <h2>Availability (Last 24 Hours)</h2>
-                <canvas id="availabilityChart"></canvas>
-            </div>
-
-            <div class="chart-wrapper">
-                <h2>Response Time (Last 24 Hours)</h2>
-                <canvas id="responseChart"></canvas>
-            </div>
-        </div>
-
-        <footer>
-            <p>Data updates every minute • Last updated: <span id="lastUpdate">-</span></p>
-        </footer>
+  <div class="container">
+    <header>
+      <h1>🌐 Multi-Site Monitor Dashboard</h1>
+      <label for="siteSelector">Select site:</label>
+      <select id="siteSelector"></select>
+    </header>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Current Status</div>
+        <div class="stat-value" id="currentStatus">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Uptime (24h)</div>
+        <div class="stat-value" id="uptime24h">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Response Time</div>
+        <div class="stat-value" id="avgResponse">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Last Check</div>
+        <div class="stat-value" id="lastCheck">-</div>
+      </div>
     </div>
-
-    <script src="app.js"></script>
+    <div class="charts-container">
+      <div class="chart-wrapper">
+        <h2>Availability (Last 24 Hours)</h2>
+        <canvas id="availabilityChart"></canvas>
+      </div>
+      <div class="chart-wrapper">
+        <h2>Response Time (Last 24 Hours)</h2>
+        <canvas id="responseChart"></canvas>
+      </div>
+    </div>
+    <footer>
+      <p>Data updates every minute • Last updated: <span id="lastUpdate">-</span></p>
+    </footer>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
