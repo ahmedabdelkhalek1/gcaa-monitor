@@ -26,16 +26,12 @@ function initCharts() {
 
 async function fetchData() {
   try {
-    const [dataResponse, sitesResponse] = await Promise.all([
-      fetch('/api/data'),
-      fetch('/api/sites')
-    ]);
-    if (!dataResponse.ok) throw new Error('Failed to fetch data');
+    // First fetch sites to populate dropdown
+    const sitesResponse = await fetch('/api/sites');
     if (!sitesResponse.ok) throw new Error('Failed to fetch sites');
-    allData = await dataResponse.json();
     const sites = await sitesResponse.json();
 
-    // Update selector with all sites from sites.json
+    // Update selector with sites from sites.json
     siteSelector.innerHTML = '';
     sites.forEach(site => {
       const opt = document.createElement('option');
@@ -43,8 +39,14 @@ async function fetchData() {
       siteSelector.appendChild(opt);
     });
 
+    // Then fetch monitoring data
+    const dataResponse = await fetch('/api/data');
+    if (!dataResponse.ok) throw new Error('Failed to fetch data');
+    allData = await dataResponse.json();
+
     updateDashboard(siteSelector.value);
   } catch (error) {
+    console.error('Error loading data:', error.message);
     document.getElementById('currentStatus').textContent = 'Error loading data';
   }
 }
